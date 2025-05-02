@@ -1,14 +1,18 @@
 <?php
 /**
- * Settings page for FAQ Accordion.
+ * Settings page for FAQ Accordion plugin.
+ *
+ * This file adds an admin settings page where users can customize
+ * background colors and icons used in the accordion.
  */
+
 defined( 'ABSPATH' ) || exit;
 
 add_action( 'admin_menu', 'sfaq_add_settings_page' );
 add_action( 'admin_init', 'sfaq_register_settings' );
 
 /**
- * Add submenu under Settings.
+ * Register submenu under Settings in WP Admin.
  */
 function sfaq_add_settings_page() {
     add_options_page(
@@ -21,7 +25,7 @@ function sfaq_add_settings_page() {
 }
 
 /**
- * Register plugin settings.
+ * Register settings, sections, and fields for the plugin.
  */
 function sfaq_register_settings() {
     register_setting( 'sfaq_accordion_group', 'sfaq_accordion_options', 'sfaq_sanitize_options' );
@@ -34,6 +38,7 @@ function sfaq_register_settings() {
         'icon_closed' => 'Closed Icon',
     ];
 
+    // Register each field using a common rendering function.
     foreach ( $fields as $id => $label ) {
         add_settings_field(
             $id,
@@ -57,7 +62,9 @@ function sfaq_register_settings() {
 }
 
 /**
- * Render an individual settings field.
+ * Render a single settings input field.
+ *
+ * @param array $args Contains 'id' of the setting field.
  */
 function sfaq_render_field( $args ) {
     $opts = get_option( 'sfaq_accordion_options' );
@@ -69,7 +76,10 @@ function sfaq_render_field( $args ) {
 }
 
 /**
- * Sanitize settings input.
+ * Sanitize user input from settings form.
+ *
+ * @param array $input Raw input values.
+ * @return array Cleaned and sanitized inputs.
  */
 function sfaq_sanitize_options( $input ) {
     $clean = [];
@@ -80,7 +90,7 @@ function sfaq_sanitize_options( $input ) {
 }
 
 /**
- * Display settings page markup.
+ * Render the plugin's settings page HTML.
  */
 function sfaq_render_settings_page() { ?>
     <div class="wrap">

@@ -34,7 +34,7 @@ The **Simple FAQ Accordion** plugin allows you to display FAQs as collapsible ac
 
 ## Installation
 
-1. Upload the `sfq-accordion` folder to your WordPress `wp-content/plugins/` directory.
+1. Upload the `sfaq-accordion` folder to your WordPress `wp-content/plugins/` directory.
 2. Activate the plugin through **Plugins » Installed Plugins** in the WordPress admin.
 3. (Optional) Navigate to **Settings » FAQ Accordion** to customize colors and icons.
 
@@ -83,18 +83,18 @@ Save changes to apply across all FAQ items.
 ## File Structure
 
 ```
-sfq-accordion/
+sfaq-accordion/
 ├── css/
 │   └── accordion.css      # Styles for accordion layout
 ├── js/
 │   └── accordion.js       # Script for toggle behavior
 ├── includes/
 │   └── settings.php       # Admin settings page and registration
-└── sfq-accordion.php      # Main plugin file (shortcode handler, asset enqueue)
+└── sfaq-accordion.php      # Main plugin file (shortcode handler, asset enqueue)
 ```
 
-* **sfq-accordion.php**: Defines plugin headers, enqueues assets, and registers the `[faq]` shortcode.
-* **css/accordion.css**: Contains CSS classes for `.sfq-accordion-item`, `.sfq-accordion-title`, `.sfq-icon`, and `.sfq-accordion-content`.
+* **sfaq-accordion.php**: Defines plugin headers, enqueues assets, and registers the `[faq]` shortcode.
+* **css/accordion.css**: Contains CSS classes for `.sfaq-accordion-item`, `.sfaq-accordion-title`, `.sfaq-icon`, and `.sfaq-accordion-content`.
 * **js/accordion.js**: Handles click events to toggle active state, swap icons, and show/hide content.
 * **includes/settings.php**: Implements the Settings API to allow customization of colors and icons via the WP admin.
 

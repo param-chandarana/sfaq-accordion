@@ -1,3 +1,6 @@
+// JavaScript for Simple FAQ Accordion plugin
+// Handles the toggle behavior of FAQ accordion items using click events.
+
 document.addEventListener("DOMContentLoaded", function () {
   document.querySelectorAll(".sfaq-accordion-item").forEach(function (item) {
     var title = item.querySelector(".sfaq-accordion-title");

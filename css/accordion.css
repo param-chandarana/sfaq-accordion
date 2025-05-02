@@ -1,3 +1,10 @@
+/*
+ * Styles for the Simple FAQ Accordion plugin
+ *
+ * These styles define the visual layout of the FAQ accordion, including
+ * spacing, background colors, and toggle effects.
+ */
+
 .sfaq-accordion-item {
     border-bottom: 1px solid #ddd;
     margin-bottom: 10px;
