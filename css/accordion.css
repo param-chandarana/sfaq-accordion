@@ -5,7 +5,7 @@
 .sfaq-accordion-title {
     cursor: pointer;
     padding: 10px;
-    background: #f1f1f1;
+    background: var(--sfaq-title-bg);
     display: flex;
     align-items: center;
 }
@@ -16,6 +16,7 @@
 .sfaq-accordion-content {
     display: none;
     padding: 10px;
+    background: var(--sfaq-content-bg);
 }
 .sfaq-accordion-title.active + .sfaq-accordion-content {
     display: block;

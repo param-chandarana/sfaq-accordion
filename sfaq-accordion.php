@@ -1,8 +1,8 @@
 <?php
 /**
  * Plugin Name: Simple FAQ Accordion
- * Description: FAQ accordion with toggle icons, default-open option, and external asset files.
- * Version: 1.2.0
+ * Description: FAQ accordion with toggle icons, default-open option, external assets, and global settings.
+ * Version: 1.3.0
  * Author: Param Chandarana
  * Text Domain: sfaq-accordion
  */
@@ -11,31 +11,52 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit; // Exit if accessed directly
 }
 
-// Define plugin paths
+// Define paths
 if ( ! defined( 'sfaq_PATH' ) ) define( 'sfaq_PATH', plugin_dir_path( __FILE__ ) );
 if ( ! defined( 'sfaq_URL'  ) ) define( 'sfaq_URL',  plugin_dir_url( __FILE__ ) );
 
+// Include settings functionality
+require_once sfaq_PATH . 'includes/settings.php';
+
 /**
- * Enqueue front-end CSS and JS from external files
+ * Enqueue front-end CSS and JS
  */
 function sfaq_enqueue_assets() {
     if ( ! is_admin() ) {
-        // Stylesheet
+        // Load options
+        $opts = get_option( 'sfaq_accordion_options', [] );
+
+        // Enqueue stylesheet
         wp_enqueue_style(
             'sfaq-accordion-style',
             sfaq_URL . 'css/accordion.css',
             array(),
-            '1.3.0'
+            '1.2.0'
         );
+        // Inline settings-based CSS variables
+        if ( ! empty( $opts ) ) {
+            $vars = sprintf(
+                ':root { --sfaq-title-bg: %1$s; --sfaq-content-bg: %2$s; }',
+                esc_attr( $opts['title_bg'] ),
+                esc_attr( $opts['content_bg'] )
+            );
+            wp_add_inline_style( 'sfaq-accordion-style', $vars );
+        }
 
-        // Script
+        // Enqueue script, localized for icons
         wp_enqueue_script(
             'sfaq-accordion-script',
             sfaq_URL . 'js/accordion.js',
             array(),
-            '1.3.0',
+            '1.2.0',
             true
         );
+        if ( ! empty( $opts ) ) {
+            wp_localize_script( 'sfaq-accordion-script', 'sfaqSettings', array(
+                'iconOpen'   => $opts['icon_open'],
+                'iconClosed' => $opts['icon_closed'],
+            ) );
+        }
     }
 }
 add_action( 'wp_enqueue_scripts', 'sfaq_enqueue_assets' );
@@ -50,7 +71,7 @@ function sfaq_accordion_shortcode( $atts, $content = null ) {
     ), $atts, 'faq' );
 
     $is_open    = filter_var( $atts['open'], FILTER_VALIDATE_BOOLEAN );
-    $icon_char  = $is_open ? '–' : '+';
+    $icon_char  = $is_open ? get_option( 'sfaq_accordion_options' )['icon_open'] : get_option( 'sfaq_accordion_options' )['icon_closed'];
     $title_cls  = $is_open ? 'sfaq-accordion-title active' : 'sfaq-accordion-title';
     $content_ds = $is_open ? ' style="display:block;"' : '';
 
